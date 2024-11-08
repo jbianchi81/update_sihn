@@ -1,0 +1,9 @@
+bin
+include
+lib
+lib64
+pyvenv.cfg
+config/config.json
+update_sihn/__pycache__
+log.txt
+tmp/*.json

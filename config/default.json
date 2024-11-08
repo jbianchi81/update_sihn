@@ -1,0 +1,18 @@
+{
+    "api": {
+        "url": "http://localhost:3005",
+        "token": "my_token"
+    },
+    "codigos": {
+        "SFER": 52,
+        "BSAS": 85,
+        "PNOR": 3345,
+        "LPLA": 86,
+        "ATAL": 3344,
+        "OYAR": 3312,
+        "SCLE": 3309,
+        "STER": 3346,
+        "MDPL": 3347
+    },
+    "source_url": "http://www.hidro.gob.ar"
+}
