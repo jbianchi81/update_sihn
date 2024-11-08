@@ -13,6 +13,10 @@
 
 ## Uso
 
+### Activa el ambiente
+
+    source bin/activate
+
 ### Actualiza todas las estaciones
 
     ./run.py -o tmp/results_sihn.json
