@@ -5,8 +5,11 @@ import argparse
 import os
 from datetime import datetime
 import sys
-import logging
+#import logging
+from .logger import Logger
 from pathlib import Path
+
+logger = Logger(level='DEBUG')
 
 # load config
 
@@ -17,7 +20,7 @@ def load_config(file_path):
 
 configfile = Path(__file__).parent / "../config/config.json"
 if not configfile.is_file():
-    logging.warning("Falta el archivo config/config.json. Cargando config/default.json")
+    logger.warning("Falta el archivo config/config.json. Cargando config/default.json")
     configfile = Path(__file__).parent / "../config/default.json"
 
 config = load_config(configfile)
@@ -92,7 +95,7 @@ def downloadParseAndUpload(cod_mareografo : str, series_id : int = None, test : 
     data = downloadValoresGrafico(cod_mareografo)
     obs = parseData(data = data, series_id = series_id)
     if test:
-        logging.info("got %i observaciones for series_id %i, cod_mareografo: %s" % (len(obs), series_id, cod_mareografo))
+        logger.info("got %i observaciones for series_id %i, cod_mareografo: %s" % (len(obs), series_id, cod_mareografo))
         return obs
     return uploadObs(obs, series_id)
 
