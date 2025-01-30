@@ -104,7 +104,12 @@ def downloadParseAndUpload(cod_mareografo : str, series_id : int = None, test : 
     if not len(obs):
         logger.warning("No observations found. Skipping")
         return []
-    return uploadObs(obs, series_id)
+    try:
+        result = uploadObs(obs, series_id)
+    except Exception as e:
+        logger.warning(e)
+        result = []
+    return result
 
 
 def downloadParseAndUploadAll(test : bool = False):
