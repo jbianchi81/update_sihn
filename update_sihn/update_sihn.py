@@ -79,6 +79,8 @@ def parseData(data : dict = None, filename : str = None, series_id : int = 52):
     return obs
 
 def uploadObs(obs, series_id, tipo : str = "puntual", url : str = config["api"]["url"], token : str = config["api"]["token"]):
+    if not len(obs):
+        raise ValueError("obs must be of length > 0")
     client = Crud(url, token )
     return client.createObservaciones(obs, series_id, tipo)
 
@@ -87,7 +89,7 @@ def valid_file_path(path):
         raise argparse.ArgumentTypeError(f"The file '{path}' does not exist.")
     return path
 
-def downloadParseAndUpload(cod_mareografo : str, series_id : int = None, test : bool = False):
+def downloadParseAndUpload(cod_mareografo : str, series_id : int = None, test : bool = False) -> list:
     if series_id is None:
         if cod_mareografo not in codigos:
             raise("Codigo de mareógrafo no encontrado")
@@ -97,6 +99,11 @@ def downloadParseAndUpload(cod_mareografo : str, series_id : int = None, test : 
     if test:
         logger.info("got %i observaciones for series_id %i, cod_mareografo: %s" % (len(obs), series_id, cod_mareografo))
         return obs
+    # filter out nulls
+    obs = [ o for o in obs if o["valor"] is not None]
+    if not len(obs):
+        logger.warning("No observations found. Skipping")
+        return []
     return uploadObs(obs, series_id)
 
 
