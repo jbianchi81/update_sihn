@@ -48,7 +48,8 @@ def downloadValoresGrafico(cod_mareografo : str = "SFER"):
     _fecha = now.strftime('%Y%m%d%H%M')
     
     # URL for the request
-    url = '%s/shnapi/v1/AlturasHorarias/ValoresGrafico/%s/%s' % (config["source_url"], cod_mareografo, _fecha) # ?_=1731069352396
+    # https://shn.geoportal.hidro.gob.ar/shnapi/v1/AlturasHorarias/ValoresGrafico/SFER/202502111303
+    url = '%s/shnapi/v1/AlturasHorarias/ValoresGrafico/%s/%s' % (config["api_url"], cod_mareografo, _fecha) # ?_=1731069352396
     
     # Make the GET request
     response = session.get(url) # , headers=headers)
