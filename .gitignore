@@ -7,3 +7,4 @@ config/config.json
 update_sihn/__pycache__
 log.txt
 tmp/*.json
+tests/__pycache__

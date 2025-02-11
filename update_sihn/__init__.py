@@ -1,5 +1,6 @@
-from .update_sihn import main
+from .update_sihn import main, downloadParseAndUpload
 
 __all__ = [
-    "main"
+    "main",
+    "downloadParseAndUpload"
 ]

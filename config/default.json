@@ -15,5 +15,6 @@
         "MDPL": 3347
     },
     "source_url": "https://www.hidro.gob.ar",
-    "api_url": "https://shn.geoportal.hidro.gob.ar"
+    "api_url": "https://shn.geoportal.hidro.gob.ar",
+    "dt_hours": 10
 }
