@@ -166,14 +166,20 @@ def downloadParseAndUploadAll(
     session = startSession()
     results = []
     for cod_mareografo, series_id in codigos.items():
-        results.append(
-            downloadParseAndUpload(
+        try:
+            data = downloadParseAndUpload(
                 cod_mareografo, 
                 series_id, 
                 test = test,
                 begin_date = begin_date,
                 end_date = end_date,
-                session = session))
+                session = session)
+        except Exception as e:
+            logger.error("Failed to download and parse code %s: %s" % (str(cod_mareografo), repr(e)))
+            continue
+        results.append(data)
+    if len(results) == 0:
+        raise Exception("Failed to download and parse. No timeseries retrieved")
     return results
 
 def main():
