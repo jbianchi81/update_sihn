@@ -162,7 +162,8 @@ def downloadParseAndUpload(cod_mareografo : str, series_id : int = None, test : 
 def downloadParseAndUploadAll(
         test : bool = False, 
         begin_date : datetime = None, 
-        end_date : datetime = None):
+        end_date : datetime = None,
+        raise_if_download_failed : bool = False):
     session = startSession()
     results = []
     for cod_mareografo, series_id in codigos.items():
@@ -178,7 +179,7 @@ def downloadParseAndUploadAll(
             logger.error("Failed to download and parse code %s: %s" % (str(cod_mareografo), repr(e)))
             continue
         results.append(data)
-    if len(results) == 0:
+    if len(results) == 0 and raise_if_download_failed:
         raise Exception("Failed to download and parse. No timeseries retrieved")
     return results
 
@@ -225,6 +226,12 @@ def main():
         type=valid_date,
         help="Fecha fin, p. ej 2024-01-01"
     )
+    parser.add_argument(
+        '-R',
+        '--raise_if_download_fails',
+        action = "store_true",
+        help="Generar un error si falla la descarga"
+    )
     
     # Parse the command-line arguments
     args = parser.parse_args()
@@ -236,7 +243,12 @@ def main():
     if args.cod_mareografo is not None:
         result = [ downloadParseAndUpload(args.cod_mareografo, test = args.test, begin_date = args.begin_date, end_date = args.end_date) ]
     else:
-        result = downloadParseAndUploadAll(test = args.test, begin_date = args.begin_date, end_date = args.end_date)
+        result = downloadParseAndUploadAll(
+            test = args.test, 
+            begin_date = args.begin_date, 
+            end_date = args.end_date, 
+            raise_if_download_failed=args.raise_if_download_fails
+        )
     if args.output:
         f = open(args.output,"w")
         json.dump(result, f)
